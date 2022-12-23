@@ -6,10 +6,19 @@ import { GoalItem } from './components/GoalItem';
 export default function App() {
   const [goal, setGoal] = useState('');
   const [goalsList, setGoalsList] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
 
   function inputHandler(event) {
     setGoal(event);
   }
+
+  const startAddGoalHandler = () => {
+    setModalVisible(true);
+  };
+
+  const cancelGoalHandler = () => {
+    setModalVisible(false);
+  };
 
   const handleSubmit = () => {
     setGoalsList((currentGoalList) => [
@@ -17,6 +26,7 @@ export default function App() {
       { text: goal, id: Math.random().toString() },
     ]);
     setGoal('');
+    cancelGoalHandler();
   };
 
   function deleteGoalHandler(id) {
@@ -27,14 +37,19 @@ export default function App() {
 
   return (
     <View style={styles.appContainer}>
-      <View style={styles.inputContainer}>
-        <GoalInput
-          inputHandler={inputHandler}
-          goal={goal}
-          onDeleteItem={deleteGoalHandler}
-        />
-        <Button onPress={handleSubmit} title="Add Goal" />
-      </View>
+      <Button
+        title="Add new Goal"
+        color="#5e0acc"
+        onPress={startAddGoalHandler}
+      />
+      <GoalInput
+        modalVisible={modalVisible}
+        cancelGoalHandler={cancelGoalHandler}
+        inputHandler={inputHandler}
+        handleSubmit={handleSubmit}
+        goal={goal}
+        onDeleteItem={deleteGoalHandler}
+      />
       <View style={styles.goalsContainer}>
         <FlatList
           data={goalsList}
@@ -61,15 +76,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 50,
     paddingHorizontal: 16,
-  },
-  inputContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 25,
-    borderBottomWidth: 1,
-    borderBottomColor: '#cccccc',
   },
   goalsContainer: {
     flex: 5,
