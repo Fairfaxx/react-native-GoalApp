@@ -30,10 +30,14 @@ const GoalInput = ({
         />
         <View style={styles.buttonContainer}>
           <View style={styles.button}>
-            <Button onPress={handleSubmit} title="Add Goal" />
+            <Button
+              onPress={cancelGoalHandler}
+              title="Cancel"
+              color="#f31282"
+            />
           </View>
           <View style={styles.button}>
-            <Button onPress={cancelGoalHandler} title="Cancel" />
+            <Button onPress={handleSubmit} title="Add Goal" color="#b180f0" />
           </View>
         </View>
       </View>
@@ -45,10 +49,13 @@ export default GoalInput;
 
 const styles = StyleSheet.create({
   textInput: {
-    borderColor: '#cccccc',
+    borderColor: '#e4d0ff',
+    backgroundColor: '#e4d0ff',
+    color: '#120438',
     borderWidth: 1,
+    borderRadius: 6,
     width: '100%',
-    padding: 8,
+    padding: 16,
   },
   inputContainer: {
     flex: 1,
